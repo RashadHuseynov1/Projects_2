@@ -1,20 +1,21 @@
-import os
+from pathlib import Path
 import pandas as pd
 import tabulate as tb
 
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "Market.csv")
+script_dir = Path(__file__).resolve().parent
+file_path = script_dir / "Market.csv"
+
 df = pd.read_csv(file_path, sep=";")
 
 
 df["Category"] = df["Category"].ffill()
 
-df["Total"] = 0
+# df["Total"] = 0
 
 df["Price"] = df["Price"].str.replace(" USD", "").str.replace(".", "").str.replace(",", ".").astype(float)
 
-df["Total"] = df["Total"].astype(float)
+# df["Total"] = df["Total"].astype(float)
 
 new_row = pd.DataFrame([{
     "Category" : "Kitchen equipments",
